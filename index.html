@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auth Page Modern UI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-image: url(web.jpg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #6a11cb;
+      background-image: linear-gradient(to right, #2575fc, #6a11cb);
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .switch-link {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .switch-link a {
+      color: #2575fc;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .welcome-message {
+      color: white;
+      margin-top: 25px;
+      font-size: 18px;
+      display: none;
+    }
+
+    footer {
+      color: white;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>MyModernAuth</header>
+
+<div class="container" id="loginBox">
+  <h2>Login</h2>
+  <form id="loginForm">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" required />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" required />
+    </div>
+    <button class="btn" type="submit">Login</button>
+  </form>
+  <div class="switch-link">Don't have an account? <a id="showSignup">Sign Up</a></div>
+</div>
+
+<div class="container" id="signupBox" style="display: none;">
+  <h2>Sign Up</h2>
+  <form id="signupForm">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="signupName" required />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="signupEmail" required />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="signupPassword" required />
+    </div>
+    <button class="btn" type="submit">Sign Up</button>
+  </form>
+  <div class="switch-link">Already have an account? <a id="showLogin">Login</a></div>
+</div>
+
+<div class="welcome-message" id="welcomeMessage">
+  Welcome, <span id="usernameDisplay"></span>! 🎉
+</div>
+
+<footer>&copy; 2025 MyModernAuth</footer>
+
+<script>
+  const loginBox = document.getElementById('loginBox');
+  const signupBox = document.getElementById('signupBox');
+  const showSignup = document.getElementById('showSignup');
+  const showLogin = document.getElementById('showLogin');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  const usernameDisplay = document.getElementById('usernameDisplay');
+
+  let users = [
+    { name: "TestUser", email: "test@example.com", password: "123456" }
+  ];
+
+  showSignup.addEventListener('click', () => {
+    loginBox.style.display = "none";
+    signupBox.style.display = "block";
+  });
+
+  showLogin.addEventListener('click', () => {
+    signupBox.style.display = "none";
+    loginBox.style.display = "block";
+  });
+
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+      usernameDisplay.textContent = user.name;
+      loginBox.style.display = "none";
+      welcomeMessage.style.display = "block";
+    } else {
+      alert("Invalid credentials");
+    }
+  });
+
+  signupForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const exists = users.some(u => u.email === email);
+    if (exists) {
+      alert("Email already registered!");
+    } else {
+      users.push({ name, email, password });
+      usernameDisplay.textContent = name;
+      signupBox.style.display = "none";
+      welcomeMessage.style.display = "block";
+    }
+  });
+</script>
+
+</body>
+</html>
